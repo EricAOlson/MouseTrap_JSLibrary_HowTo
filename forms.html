@@ -1,0 +1,64 @@
+<!-- Eric Olson - CS290_400 How-To -->
+<!doctype html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>How-To 'Mousetrap' - Managing Forms</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="monokai.css">
+  <script src="mousetrap.min.js"></script>
+  <script src="rainbow-custom.min.js"></script>
+  <script src="olson_how_to.js"></script>
+  </head>
+  <body>
+    <header>Mousetrap Library How-To <span>by Eric Olson</span></header>
+    <!-- Left Navigation Pane -->
+    <div class="left_nav">
+      <h4>How-To Navigation:</h4>
+      <ul>
+        <li><a href="index.html">Section 1 - Introduction</a></li>
+        <li><a href="setup.html">Section 2 - Library Setup</a></li>
+        <li><a href="basic.html">Section 3 - Basic Key Binding</a></li>
+        <li><a href="specialty.html">Section 4 - Advanced Binding</a></li>
+        <li><a href="forms.html">Section 5 - Managing Forms</a></li>
+        <li><a href="term.html">Section 6 - Remove Binding</a></li>
+        <li><a href="more.html">Section 7 - Additional Tools</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <h1>MANAGING FORMS</h1>
+      <p>By default Mousetrap is applied to the entire document for each page that 'key' bindings are declared, the exception to this is inside a 'textarea', 'input', or 'select' element.  This generally makes a lot of sense.  When asking the user for input, you wouldn't want bound functions called every time the input happened to contain a bound 'key'.  For example, if 'p' is bound to a print function you wouldn't want this called every time 'p' was included in an input text field.</p>
+      <p>However, if you do wish your bindings to apply even inside of a 'textarea', 'input', or 'select' element, you have a couple options, class assignment or the Global Binding extension.</p>
+      
+      <h2>Class Assignment</h2>
+      <p>By simply adding a class of "mousetrap" to one of the excluded elements, any Mousetrap bindings will be available inside the element.  For example, say the only binding you are utilizing is a binding to trigger a spell checker, and the binding is 'ctrl+s'.  It's unlikely that the user would type 'ctrl+s' in the natural course of filling out their input field, so it would be safe and likely helpful to have this binding available even while inputting text.  This can be accomplished by adding the "mousetrap" class to the input field like so:</p>
+      <pre>
+<code data-language="html">&ltinput  type="text"  name="text_input"  class="mousetrap  /&gt</code>
+      </pre>
+      <p>Now the user can initiate the spell checker even while the input field is active by hitting 'ctrl+s'.  However, this does make the full array of bound keys active while the input field is in use.  If you also had a key binding of 'p' set to print the page, this would not be a good solution, as the letter p would naturally be typed during text input.  However, you can pick and choose which bindings to make active inside of excluded elements using the Global Binding extension.</p>
+
+      <h2>Global Binding</h2>
+      <p>The Global Binding option is an extension of the mousetrap library and requires inclusion of an additional .js file which can be downloaded from the <a href="https://github.com/ccampbell/mousetrap">Github Repo</a>, or by "Save as link..." <a href="https://raw.githubusercontent.com/ccampbell/mousetrap/master/plugins/global-bind/mousetrap-global-bind.min.js">HERE</a>.  You need to include the "mousetrap-global-bind.min.js" file with the following command:</p>
+      <pre>
+<code data-language="html">&ltscript src="PATH_TO\mousetrap-global-bind.min.js"&gt&lt/script&gt</code>
+      </pre>
+      <p>Now you have an additional Moustrap method available called .bindGlobal().  The .bindGlobal() method works exactly the same as the .bind() method, and accepts the same parameters, the only difference is that anything bound using the .bindGlobal() method will not have the exclusion for 'textarea', 'input', or 'select' elements.</p>
+      <p>In the example above where we are implementing a text editor, want a key binding of 'p' for print and a key binding of 'ctrl+s' for spell checker, we likely only want the spell checker active inside the input form, therefore we would make our initial binding calls like this:</p>
+      <pre>
+<code data-language="javascript">//Not available in input fields.
+Mousetrap.bind('p', print_function);
+
+//Available everywhere.  
+Mousetrap.bindGlobal('ctrl+s', spell_check);  </code>
+      </pre>
+      <p>There is no need here to add a class of "mousetrap" to the input field.  With the above code the user can now input their text and each time a 'p' is pressed during text input nothing will occur as the 'p' was bound with a .bind and therefore excludes all 'input' fields.  However, the user can, even while inputting text, call the spell checker with 'ctrl+s'.  This was bound globally with .bindGlobal and therefore is available anywhere on the page.</p>
+
+      <form action="specialty.html" id="prev">
+        <input type="submit" value="PREVIOUS">
+      </form>
+      <form action="term.html" id="next">
+        <input type="submit" value="NEXT">
+      </form>
+    </div>
+  </body>
+</html>

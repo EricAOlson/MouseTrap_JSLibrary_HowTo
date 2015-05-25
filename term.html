@@ -1,0 +1,76 @@
+<!-- Eric Olson - CS290_400 How-To -->
+<!doctype html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>How-To 'Mousetrap' - Remove Binding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="monokai.css">
+  <script src="mousetrap.min.js"></script>
+  <script src="rainbow-custom.min.js"></script>
+  <script src="olson_how_to.js"></script>
+  </head>
+  <body>
+    <header>Mousetrap Library How-To <span>by Eric Olson</span></header>
+    <!-- Left Navigation Pane -->
+    <div class="left_nav">
+      <h4>How-To Navigation:</h4>
+      <ul>
+        <li><a href="index.html">Section 1 - Introduction</a></li>
+        <li><a href="setup.html">Section 2 - Library Setup</a></li>
+        <li><a href="basic.html">Section 3 - Basic Key Binding</a></li>
+        <li><a href="specialty.html">Section 4 - Advanced Binding</a></li>
+        <li><a href="forms.html">Section 5 - Managing Forms</a></li>
+        <li><a href="term.html">Section 6 - Remove Binding</a></li>
+        <li><a href="more.html">Section 7 - Additional Tools</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <h1>REMOVE BINDING</h1>
+      <p>In this section we'll cover a few ways you can terminate a key binding.  There are a number of reasons to terminate an established binding, and fittingly a few ways to process the termination.  Here we'll look at unbinding, overrides and pause/resume functionality.</p>
+      
+      <h2>Unbinding</h2>
+      <p>The easiest and most straightforward way to terminate a key binding is to simply unbind it.  This will remove the binding from the associate array, and it will no longer trigger any events.  The .unbind() method needs to be called with exactly the same 'key' or array of keys as was used when originally bound.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.unbind('ctrl+p');
+Mousetrap.unbind(['p', 'ctrl+p', 'p r t']);
+</code>
+      </pre>
+      <p>If you wish to unbind all previously declared key bindings, you can use Mousetrap.reset(), this requires no arguments, and simply reinitializes the associative array with no bound keys/events.  New bindings can now be bound to the reset array.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.reset();</code>
+      </pre>
+
+      <h2>Overrides</h2>
+      <p>If instead you wish to change the event a bound key triggers, you can override the binding.  For example, say you have been using 'ctrl+s' to save data as you fill out a complex form.  However, now the form is complete and you wish 'ctrl+s' to submit the saved form instead.  This can be accomplished by simply re-binding the 'key' to a new function.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('ctrl+s', function() { _saveStuff(); });
+once form is complete ...
+ { Mousetrap.bind('ctrl+s', function() { _submitStuff(); }); } 
+</code>
+      </pre>
+      <p>With this code the ctrl+s combo will always be an active key binding on your page.  It will call the save function until the form is completed and your control statement executes the second .bind command, after which 'ctrl+s' will execute the submit function instead.</p>
+
+      <h2>Pause/Resume</h2>
+      <p>You may also find it necessary to temporarily cease binding functions, but wish to have them fully reinstated at some future point in time.  Rather then resetting and rebinding, you can pause and resume binding behavior.</p>
+      <p>This requires another Mousetrap extension available via the <a href="https://github.com/ccampbell/mousetrap">Github Repo</a> or by "Save link as..." <a href="https://raw.githubusercontent.com/ccampbell/mousetrap/master/plugins/pause/mousetrap-pause.min.js">HERE</a>.  You will need to include the new 'mousetrap-pause.min.js' file with:</p>
+      <pre>
+<code data-language="html">&ltscript src="\PATH_TO\mousetrap-pause.min.js"&gt&lt/script&gt</code>
+      </pre>
+      <p>This gives you access to two new methods, .pause() and .unpause().  These require no arguments and will pause/resume all bound keys.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.pause();
+Mousetrap.unpause();
+</code>
+      </pre>
+      <p>This might be useful when making a lengthy Ajax call and you want to ensure no additional key bindings are triggered during the wait, or perhaps you have a pop out form, or other temporary state for your page during which you want no key binding events triggered.</p>
+
+      <form action="forms.html" id="prev">
+        <input type="submit" value="PREVIOUS">
+      </form>
+      <form action="more.html" id="next">
+        <input type="submit" value="NEXT">
+      </form>
+    </div>
+  </body>
+</html>

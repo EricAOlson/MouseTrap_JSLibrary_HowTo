@@ -1,0 +1,61 @@
+<!-- Eric Olson - CS290_400 How-To -->
+<!doctype html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>How-To 'Mousetrap' - Library Setup</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="monokai.css">
+  <script src="mousetrap.min.js"></script>
+  <script src="rainbow-custom.min.js"></script>
+  <script src="olson_how_to.js"></script>
+  </head>
+  <body>
+    <header>Mousetrap Library How-To <span>by Eric Olson</span></header>
+    <!-- Left Navigation Pane -->
+    <div class="left_nav">
+      <h4>How-To Navigation:</h4>
+      <ul>
+        <li><a href="index.html">Section 1 - Introduction</a></li>
+        <li><a href="setup.html">Section 2 - Library Setup</a></li>
+        <li><a href="basic.html">Section 3 - Basic Key Binding</a></li>
+        <li><a href="specialty.html">Section 4 - Advanced Binding</a></li>
+        <li><a href="forms.html">Section 5 - Managing Forms</a></li>
+        <li><a href="term.html">Section 6 - Remove Binding</a></li>
+        <li><a href="more.html">Section 7 - Additional Tools</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <h1>LIBRARY SETUP</h1>
+      
+      <h2>Get Mousetrap Library</h2>
+      <p>The library is a small javascript file that can be downloaded as part of <a href="https://github.com/ccampbell/mousetrap">ccampbell's mousetrap repository</a> or Mr. Campbell has also provided the following link, which you can "Save link as..." <a href="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?7e022">HERE</a>.  You're going to need 'mousetrap.min.js', a small 4.57KB file.</p>
+      <p>The above links provide the minimized library.  If you would like to review the library in a more understandable user friendly layout (i.e. with white space and comments), download the mousetrap.js file instead from the same <a href="https://github.com/ccampbell/mousetrap">Github repo</a> or <a href="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.js">HERE</a>.</p>
+      
+      <h2>Include Mousetrap Library</h2>
+      <p>To use the library, you simply include the file as a &ltscript&gt in any HTML page.  See below:</p>
+      <pre>
+<code data-language="html">&ltscript src="\PATH_TO\mousetrap.min.js"&gt&lt/script&gt</code>
+or
+<code data-language="html">&ltscript src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"&gt&lt/script&gt</code>
+      </pre>
+      <h5>Note the second option benefits from receiving updates to the library Mr. Campbell makes over time, but is conversely subject to Mr. Campbell's site remaining updated, and available, so use at your own risk.</h5>
+      <p>Now you are ready to use the Mousetrap Library.  An object called Mousetrap will be included in your JavaScript code.  Mousetrap objects include a number of internal methods which will be covered throughout this How-To.</p>
+      
+      <h2>Supported Browsers</h2>
+      <p>The Mousetrap Library has been tested with:</p>
+      <ul>
+        <li>Chrome</li>
+        <li>Firefox</li>
+        <li>Internet Explorer</li>
+        <li>Safari</li>
+      </ul>
+      <form action="index.html" id="prev">
+        <input type="submit" value="PREVIOUS">
+      </form>
+      <form action="basic.html" id="next">
+        <input type="submit" value="NEXT">
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!-- Eric Olson - CS290_400 How-To -->
+<!doctype html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>How-To 'Mousetrap' - Basic Key Binding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="monokai.css">
+  <script src="mousetrap.min.js"></script>
+  <script src="rainbow-custom.min.js"></script>
+  <script src="olson_how_to.js"></script>
+  </head>
+  <body>
+    <header>Mousetrap Library How-To <span>by Eric Olson</span></header>
+    <!-- Left Navigation Pane -->
+    <div class="left_nav">
+      <h4>How-To Navigation:</h4>
+      <ul>
+        <li><a href="index.html">Section 1 - Introduction</a></li>
+        <li><a href="setup.html">Section 2 - Library Setup</a></li>
+        <li><a href="basic.html">Section 3 - Basic Key Binding</a></li>
+        <li><a href="specialty.html">Section 4 - Advanced Binding</a></li>
+        <li><a href="forms.html">Section 5 - Managing Forms</a></li>
+        <li><a href="term.html">Section 6 - Remove Binding</a></li>
+        <li><a href="more.html">Section 7 - Additional Tools</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <h1>BASIC KEY BINDING</h1>
+      
+      <h2>.bind() Method</h2>
+      <p>The Mousetrap object contains an associative array of all the key bindings it needs to monitor for.  Initially, this array is empty, so to begin using Mousetrap we need to bind keys:events to the array.  This is done with the .bind() method.  This method is the workhorse of the Mousetrap library, and much of this guide is dedicated to various ways to leverage this single method.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('key',  function(),  type);</code>
+      </pre>
+      <p>The method takes 3 arguments:</p>
+      <ul>
+        <li>'key' - The key(s) to be bound, and the options available here will be covered in more detail in this and the next sections of the How-To.</li>
+        <li>function() - A basic JavaScript function call that executes the action you wish to perform when the 'key' binding is triggered.  This can be defined inline in the .bind() command or separately (var assigned a function).  Essentially, anything you can do within a JavaScript function can therefore be bound to a key-binding.</li>
+        <li>type - This is an optional argument that can accept one of three values:
+          <ul>
+            <li>'keypress'</li>
+            <li>'keydown'</li>
+            <li>'keyup'</li>
+          </ul>
+        </li>
+      </ul>
+      <h5>Mousetrap will make an informed decision as to the intended type based on the bound keys.  These should only be used if you have a very specific reason to overwrite the default functionality.</h5>
+      
+      <h2>Supported Keys</h2>
+      <p>Most standard keys can be bound via Mousetrap.bind(), these include:</p>
+      <ul>
+        <li>Alpha (a, b, ... , z)</li>
+        <li>Numeric (1, 2, ... , 0)</li>
+        <li>Upper Case*  (A, B, ... , Z)</li>
+        <li>Special Characters*  (~, !, @, ... , -, =)</li>
+        <li>Specialty Keys, these include keys that can not easily be typed directly into JavaScript. Instead you type the keyword in place of the key itself:
+          <ul class="long_list">
+            <li>'alt'</li>
+            <li>'backspace'</li>
+            <li>'capslock'</li>
+            <li>'command' (for Mac)</li>
+            <li>'ctrl'</li>
+            <li>'del'</li>
+            <li>'down' (down arrow)</li>
+            <li>'end'</li>
+            <li>'enter'</li>
+            <li>'esc' or 'escape'</li>
+            <li>'home'</li>
+            <li>'ins'</li>
+            <li>'left' (left arrow)</li>
+            <li>'meta'</li>
+            <li>'option' (for Mac)</li>
+            <li>'pagedown'</li>
+            <li>'pageup'</li>
+            <li>'plus'</li>
+            <li>'return'</li>
+            <li>'right' (right arrow)</li>
+            <li>'shift'</li>
+            <li>'space'</li>
+            <li>'tab'</li>
+            <li>'up' (up arrow)</li>
+          </ul>
+        </li>
+      </ul>
+      <h5>* Note:  Capital Letters and symbols that require a shift to access (i.e. !, @, #, etc.) are technically key combos.  While combos are also available and covered in the next section, Mousetrap interprets capital letters and shift requiring symbols automatically.  This means mousetrap.bind('A', varFunction) or mousetrap.bind('%', varFunction) are perfectly legal.<h5>
+      
+      <h2>Example</h2>
+      <p>Let's say you're hosting a nerd website with jokes just for nerds.  You want to present the user with the setup, and then 'reveal' the punch line to the user using key bindings.  This simple example can be implemented with the .bind() method and CCS styling.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('a', function() {
+  var ans = document.getElementById('answer');
+  ans.className = 'show';
+  }
+);</code>
+</pre>
+       <p>To try this out, look below and hit the letter 'a' to reveal the answer or 'h' to re-hide the answer. </p>
+       <section>
+         <div>Why do Computer Scientists keep confusing Halloween with Christmas?</div>
+         <div id="answer" class="hidden">&gt&gt&gt  Because Oct 31 = Dec 25.  (Octal 31 = Decimal 25)</div>
+       </section>
+      
+      <form action="setup.html" id="prev">
+        <input type="submit" value="PREVIOUS">
+      </form>
+      <form action="specialty.html" id="next">
+        <input type="submit" value="NEXT">
+      </form>
+    </div>
+  </body>
+</html>

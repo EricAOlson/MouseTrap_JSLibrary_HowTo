@@ -1,0 +1,105 @@
+<!-- Eric Olson - CS290_400 How-To -->
+<!doctype html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>How-To 'Mousetrap' - Advanced Binding</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="monokai.css">
+  <script src="mousetrap.min.js"></script>
+  <script src="rainbow-custom.min.js"></script>
+  <script src="olson_how_to.js"></script>
+  </head>
+  <body>
+    <header>Mousetrap Library How-To <span>by Eric Olson</span></header>
+    <!-- Left Navigation Pane -->
+    <div class="left_nav">
+      <h4>How-To Navigation:</h4>
+      <ul>
+        <li><a href="index.html">Section 1 - Introduction</a></li>
+        <li><a href="setup.html">Section 2 - Library Setup</a></li>
+        <li><a href="basic.html">Section 3 - Basic Key Binding</a></li>
+        <li><a href="specialty.html">Section 4 - Advanced Binding</a></li>
+        <li><a href="forms.html">Section 5 - Managing Forms</a></li>
+        <li><a href="term.html">Section 6 - Remove Binding</a></li>
+        <li><a href="more.html">Section 7 - Additional Tools</a></li>
+      </ul>
+    </div>
+    <div class="content">
+      <h1>ADVANCED BINDING</h1>
+      
+      <h2>Combination Bind</h2>
+      <p>The .bind() method can also accept combinations of keys pressed simultaneously, for example, Ctrl+O to open a new file in Microsoft Office.  Here only when the keys are pressed at the same time will the event be triggered.</p>
+      <p>To bind a combination of 2 keys list them in the 'key' argument separated with the + symbol.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('ctrl+o', openFunction);</code>
+      </pre>
+      <p>Many shift+_ combinations are obvious and interpreted by Mousetrap automatically.  So the following, for example, are equivalent:</p>
+       <pre>
+<code data-language="javascript">Mousetrap.bind('shift+a', func) == Mousetrap.bind('A', func)
+Mousetrap.bind('shift+5', func) == Mousetrap.bind('%', func)</code>
+      </pre>
+      <p>It's worth noting that the + symbol is interpreted by Mousetrap in the service of combinations.  If you wish to bind the + symbol you have a couple options, namely the keyword 'plus' or a combination 'shift+='.</p>
+      <p>Note also that upon testing it was found combinations with more then 2 characters are not supported, while not explicitly stated by the library author, consider this functionality to be undefined.  (i.e.   'ctrl+alt+del' or 'a+s+d+f')</p>
+
+      <h2>Sequence Bind</h2>
+      <p>The .bind() method also accepts sequences of keys pressed in quick succession (at most 1 second between keystrokes).  The syntax to denote a sequence is to list each key in the sequence separated by a space.</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('a b', my_function);</code>
+      </pre>
+     <p>Unlike combinations, sequences can support more then two keys, and can include combinations within the sequence.  The following, for example, are all legal: </p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('a a', my_function);
+Mousetrap.bind('w o r d', my_function);
+Mousetrap.bind('a b alt+c', my_function);</code>
+      </pre>
+      <p>You should be careful with Sequence bindings  when also using additional bindings with the same 'keys'.  If a 'key' used in a single bind, is also used in a sequential bind there is a conflict.  Mousetrap will not immediately execute the function associated with the single bind and instead wait to see if the sequential bind is completed.  If the sequential bind is completed, it will fire, and the single bind will not execute.  If the sequential bind is not completed or times out, the single bind will then be executed but with a delay.  Therefore, it is recommended not to use the same 'key' in both single and sequential binds.  For example avoid:</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind('up', scrollUp);
+Mousetrap.bind('up down left right', easterEgg);</code>
+      </pre>
+      <p>This will cause a conflict when the up button is pressed.  There will be a delay while the system waits to see if the full sequence is completed successfully.</p>
+      
+      <h2>Multiple Binds</h2>
+      <p>If multiple key bindings are desired to trigger the same event, they can be passed to the .bind() method as an array.  For example, if all of 'ctrl+s' and 'alt+s' and 'shift+s' are all supposed to trigger a save command, one can bind all three combos in a single .bind() method call as such:</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind(['ctrl+s', 'alt+s', 'shift+s'], my_function);</code>
+      </pre>
+
+      <h2>Binding for Macs</h2>
+      <p>While Mac and PC keyboards are generally similar and can be used interchangeably with Mousetrap, there is one notable feature designed specifically for PC/Mac compatibility.  Note that Mac keyboards contain 'command' and 'option' keys.  These are already included in the available keywords as special keys.</p>
+      <p>For example, let's say you wish to use a 'ctrl+p' combo to trigger a print of your webpage, but for Mac you wish this to be 'command+p'.  This can be accomplished either via a multiple bind, or via the 'mod' keyword.  The mod keyword will be interpreted as either ctrl for Windows/Linux machines, and as command for Mac's.  The following two lines of code are equivalent and will accomplish this stated purpose:</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind(['ctrl+p', 'command+p'], my_function);
+Mousetrap.bind('mod+p', my_function);</code>
+      </pre>
+
+      <h2>Example</h2>
+      <p>The following code, utilizing combinations, sequences, and multiple binding via arrays has been added to the JavaScript file for this site:</p>
+      <pre>
+<code data-language="javascript">Mousetrap.bind(['alt+p', 'p r e v'], function() {
+  var go;
+  if (go = document.getElementById('prev')){
+    go.submit();
+  }
+});
+
+Mousetrap.bind(['alt+n', 'n e x t'], function() {
+  var go;
+  if (go = document.getElementById('next')){
+    go.submit();
+  }
+});</code>
+      </pre>
+      <p>In addition to the Left Navigation Pane and the buttons at the bottom, now you can, from any page within this site, type 'alt+n' or 'n e x t' in quick succession to navigate to the next page, alternatively you can type 'alt+p' or 'p r e v' in quick succession to navigate to the prior page.  Give it at try!
+      </p>
+
+      <form action="basic.html" id="prev">
+        <input type="submit" value="PREVIOUS">
+      </form>
+      <form action="forms.html" id="next">
+        <input type="submit" value="NEXT">
+      </form>
+    </div>
+  </body>
+</html>
